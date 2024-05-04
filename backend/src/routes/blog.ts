@@ -31,7 +31,7 @@ blogRouter.use("/*", async (c, next) => {
     await next();
   } catch (error) {
     c.status(500);
-    return c.json({ error: "Server error during authentication" });
+    return c.json({ error: "Server error during authentication middleware" });
   }
 });
 
@@ -95,7 +95,18 @@ blogRouter.get("/bulk", async (c) => {
   }).$extends(withAccelerate());
 
   try {
-    const blogs = await prisma.post.findMany();
+    const blogs = await prisma.post.findMany({
+      select: {
+        content: true,
+        title: true,
+        id: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
     return c.json({
       blogs,
     });
@@ -116,6 +127,16 @@ blogRouter.get("/:id", async (c) => {
     const blog = await prisma.post.findFirst({
       where: {
         id: id,
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        author: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
 
