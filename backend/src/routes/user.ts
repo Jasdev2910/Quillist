@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { sign, verify } from "hono/jwt";
 import { signinInput, signupInput } from "@jasdev_virdi/medium-blog";
+import { blogRouter } from "./blog";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const textEncoder = new TextEncoder();
 
@@ -27,7 +29,22 @@ export const userRouter = new Hono<{
     DATABASE_URL: string;
     JWT_SECRET: string;
   };
+  Variables: {
+    userId: string;
+  };
 }>();
+
+// Define the "/me" route with middleware
+userRouter.get("/me", authMiddleware, async (c) => {
+  const userId = c.get("userId");
+
+  if (!userId) {
+    c.status(403);
+    return c.json({ message: "Not Logged In" });
+  }
+
+  return c.json({ userId });
+});
 
 // Signup
 userRouter.post("/signup", async (c) => {

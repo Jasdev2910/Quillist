@@ -1,9 +1,21 @@
+// import { Navigate } from "react-router-dom";
 import { Appbar } from "../components/Appbar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../hooks";
+// import useUser from "../hooks/useUser";
 
 export const Blogs = () => {
+  // const user = useUser();
+
+  // if (user.loading) {
+  //   return "Loading.....";
+  // }
+
+  // if (user.userDetails) {
+  //   return <Navigate to={"/signup"} />;
+  // }
+
   const { loading, blogs } = useBlogs();
 
   if (loading) {
