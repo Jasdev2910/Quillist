@@ -7,7 +7,8 @@ import { Signup } from "./pages/Signup.tsx";
 import { Signin } from "./pages/Signin.tsx";
 import { Blog } from "./pages/Blog.tsx";
 import { Blogs } from "./pages/Blogs.tsx";
-import { Publish } from "./pages/Publish.tsx";
+// import { Publish } from "./pages/Publish.tsx";
+import CreatePost from "./components/CreatePost.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -19,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path="/signin" element={<Signin />} />
         <Route path="/blog/:id" element={<Blog />} />
         <Route path="/blogs" element={<Blogs />} />
-        <Route path="/publish" element={<Publish />} />
+        <Route path="/publish" element={<CreatePost />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
